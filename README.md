@@ -2,6 +2,11 @@
                 
 A proof of concept script - Version: 0.1
 
+Previz Camera Tools lets Blender Video Editor control
+the camera selection in the 3D View. Which makes it possible
+to edit the clip timings in the same screen and at the same
+time as cameras and everything else in the 3D Viewport.  
+
  # Run the script
  1. Run the script in the text-editor in Blender.
  2. Find the functions in the bottom of the right-hand-side
