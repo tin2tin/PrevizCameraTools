@@ -28,3 +28,6 @@ time as cameras and everything else in the 3D Viewport.
  - And only cameras from the current scene can be shown in 3d View. 
    (This is a limitation of Blender. There is only one scene pr. 
    Screen) 
+
+# Video on YouTube
+https://www.youtube.com/watch?v=b4eQrns5KpQ
