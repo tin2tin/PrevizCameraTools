@@ -1,6 +1,6 @@
 # Previz Camera Tools
                 
-A proof of concept script by Tin2tin - Version: 0.1
+A proof of concept script - Version: 0.1
 
  # Run the script
  1. Run the script in the text-editor in Blender.
