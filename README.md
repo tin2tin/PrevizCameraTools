@@ -1,6 +1,6 @@
 # Previz Camera Tools
-                              
        (a proof of concept script)
+Previz Camera Tool sets up the Video Editor to control the camera selection in the 3D View on frame updates. Which makes it possible to edit the clip timings on the same screen and at the same time as editing cameras and everything else in the 3D Viewport.
 
 # Run the script
  1. Run the script in the text-editor.
