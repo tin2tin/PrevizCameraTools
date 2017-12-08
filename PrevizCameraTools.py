@@ -1,8 +1,16 @@
-#
+
 # P r e v i z   C a m e r a   T o o l s
 #                               
 #       (a proof of concept script)
-#
+
+# Version: 0.2
+
+# About:
+# Previz Camera Tools sets up the Video Editor to control the
+# camera selection in the 3D View on frame updates. Which makes
+# it possible to edit the clip timings on the same screen and
+# at the same time as editing cameras and everything else in
+# the 3D Viewport.
 
 # Run the script:
 # 1. Run the script in the text-editor.
@@ -10,11 +18,20 @@
 #    properties menu of the 3D View.
 
 # Functions:
-# The Button "Add Camera to Sequencer" will add a scene strip
+# "Walk Navigation" (native Blender function) will give f.p.s. 
+# camera control. Shortcuts: q,w,e,a,s,d
+# 
+# "Add Camera to View" by Rockbard will turn the view port
+# into a camera. Shortcut: Ctrl+Shift+Num_0
+# 
+# "Cycle Cameras" by CoDEmanX will cycle between cameras. 
+# Shortcuts: Ctrl+Shift+Left/Right arrow.
+#      
+# "Add Camera to Sequencer" will add a scene strip
 # in the Sequencer with the current camera starting from the
 # current frame.
 
-# The checkbox "Link Sequencer to 3D View" will link the 
+# "Link Sequencer to 3D View" will link the 
 # framenumber and switch cameras in the 3D View. So playing 
 # the sequencer will play the sequence in the 3D View. So 
 # the camera work of the 3d scene can be edited instantly. 
