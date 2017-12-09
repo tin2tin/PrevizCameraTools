@@ -1,9 +1,7 @@
 
 # P r e v i z   C a m e r a   T o o l s
-#                               
-#       (a proof of concept script)
-
-# Version: 0.2
+#
+#           Version: 0.3
 
 # About:
 # Previz Camera Tools sets up the Video Editor to control the
@@ -26,7 +24,9 @@
 # 
 # "Cycle Cameras" by CoDEmanX will cycle between cameras. 
 # Shortcuts: Ctrl+Shift+Left/Right arrow.
-#      
+# 
+# "Camera Renamer" shows current camera and allows to rename it.
+#
 # "Add Camera to Sequencer" will add a scene strip
 # in the Sequencer with the current camera starting from the
 # current frame.
@@ -38,17 +38,17 @@
 
 # NB.: 
 # - Jitter in the Sequencer playback means hit "Refresh Sequencer" button. 
-# - Only scene strips are supported in the sequencer. 
+# - Only scene strips are supported for showing in 3D Viewport in the sequencer. 
 # - And only cameras from the current scene can be shown in 3d View. 
 #   (This is a limitation of Blender. There is only one scene pr. 
 #   Screen) 
 
-# Ideas for more functions: 
-#   Checkbox: Add camera to sequencer strip from current frame(y/n)
+# Ideas for more functions(out of my current coding skills): 
+#   Set Focal Length
 #   Buttons(two): Set in and out points 
+#   Checkbox: Select Strip/Seq cam updated = Select Camera & update 3D View
 
 # API trouble:
-#   Checkbox: Select Strip = Select Camera & update 3D View(missing function detect new strip selected?) 
 #   Suggest API feature to access local scenes in Sequencer
 
 bl_info = {
@@ -78,13 +78,29 @@ class PrevizMakerPanel(bpy.types.Panel) :
     bl_label = "Previz Camera Tools"
 
     def draw(self, context) :
-        TheCol = self.layout.column(align = True)
-        scene = context.scene  
-        TheCol.operator("view3d.walk", text = "Walk Navigation")  
-        TheCol.operator("object.add_cam_to_view", text = "Add Camera to View")
-        TheCol.operator("view3d.cycle_cameras", text = "Cycle Cameras")        
-        TheCol.operator("view3d.make_previz", text = "Add Camera to Sequencer")  
-        TheCol.prop(context.scene, "make_Previz_LinkSequencer") 
+        TheCol = self.layout.column(align = False)   
+        scene = context.scene 
+        view = context.space_data
+        TheCol= TheCol.column(align=True)               
+          
+        TheCol.operator("view3d.walk", text = "Walk Navigation")      
+        #TheCol.prop(context.space_data, "lens") # User perspective lens - Should be Camera Focal Length        
+        TheCol.operator("object.add_cam_to_view", text = "Add Camera") 
+        TheCol= self.layout.column(align=False) 
+        TheCol= TheCol.column(align=True)             
+        TheCol.operator("view3d.cycle_cameras", text = "Cycle Cameras") 
+        TheCol.prop(context.scene.camera, 'name', text='', icon='CAMERA_DATA')#, icon='OBJECT_DATAMODE')         
+        #TheCol.prop(context.scene, 'active_camera', text='', icon='CAMERA_DATA') # Camera drop down menu                                  
+        #TheCol = TheCol.row(align=True) #Same line # Preview in/out should be Camera In/Out for adding in Sequencer
+        #TheCol.prop(scene, "frame_start", text="In")
+        #TheCol.prop(scene, "frame_end", text="Out") 
+        TheCol = self.layout.row(align=False)           
+
+        TheCol= TheCol.column(align=True) 
+        TheCol.operator("view3d.make_previz", text = "Add to Sequencer") 
+        TheCol = self.layout.row(align=False)        
+        TheCol.prop(scene, "make_Previz_LinkSequencer")         
+
         
                 # check if bool property is enabled
         if (context.scene.make_Previz_LinkSequencer == True):
@@ -97,7 +113,7 @@ class MakePreviz(bpy.types.Operator) :
     """Adds current camera scene strip with to Sequencer"""
     bl_idname = "view3d.make_previz"
     bl_label = "Add Previz"
-    bl_options = {"UNDO"}
+    bl_options = {'REGISTER',"UNDO"}
 
     def invoke(self, context, event) :
         addSceneStripInOut()
@@ -108,13 +124,13 @@ class MakePreviz(bpy.types.Operator) :
 # ------------------------------------------------------------------------
 
 class AddCamToView(bpy.types.Operator):
-    """Adds dynamic brush(es) and canvas in one click"""
+    """Converts View to Camera"""
     bl_idname = "object.add_cam_to_view"
     bl_label = "Add Camera to View"
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-    
+        
         # Setting variables
         context = bpy.context
         scene = context.scene
@@ -161,13 +177,11 @@ class AddCamToView(bpy.types.Operator):
         
         #setting sensor
         bpy.context.object.data.sensor_width = 55
-
        
 
         #camera to view
         bpy.ops.view3d.camera_to_view()    
         
-
                         
         # Range mapping focus to locZ
         def translate(value, leftMin, leftMax, rightMin, rightMax):
@@ -182,7 +196,7 @@ class AddCamToView(bpy.types.Operator):
             x = rightMin + (valueScaled * rightSpan)
             return(x)
 
-        locZ = float("%.1f" % translate(focal,13,45,0.1,0.2))
+        locZ = float("%.1f" % translate(focal,13,45,0.1,0.7))
 
         #fit canera to viewport
         def viewFrom(screen):
@@ -199,9 +213,9 @@ class AddCamToView(bpy.types.Operator):
         r3d.view_camera_zoom = 29.13
         
         #Move camera backwards on local axis
-        ob = bpy.context.scene.objects.active
-        loc = Matrix.Translation((0.0, 0.0, locZ))
-        ob.matrix_basis *= loc
+        #ob = bpy.context.scene.objects.active
+        #loc = Matrix.Translation((0.0, 0.0, locZ))
+        #ob.matrix_basis *= loc
                         
         # Deselecting all
         bpy.ops.object.select_all(action='DESELECT')
@@ -217,8 +231,7 @@ class AddCamToView(bpy.types.Operator):
         #bpy.ops.view3d.viewnumpad(type='CAMERA')
 
         # Unchecking "Lock camera"
-        bpy.context.space_data.lock_camera = False
-    
+        bpy.context.space_data.lock_camera = False    
 
         return {'FINISHED'}
 
@@ -236,6 +249,23 @@ class LockCameraToggle(bpy.types.Operator):
        
 
         return {'FINISHED'}
+
+# ------------------------------------------------------------------------
+#     Camera Drop Down menu 
+# ------------------------------------------------------------------------
+
+def update(scene, context):
+    scene.camera = bpy.data.objects[scene.active_camera]
+
+def get_camera_list(scene, context):
+    """Return a list of all cameras in the current scene."""
+    items = []
+    
+    for obj in scene.objects:
+        if obj.type == 'CAMERA':
+            items.append((obj.name, obj.name, ""))
+    
+    return items
 
 
 # ------------------------------------------------------------------------
@@ -271,7 +301,7 @@ def syncSceneLength(*pArgs):
         except AttributeError:
                 pass
   
-        #Set 3D View to Global. Cameras can't be switched in local.      
+#Set 3D View to Global. Cameras can't be switched in local.      
 def set3dViewGlobal():
     for region in area.regions:
         if region.type == 'WINDOW':
@@ -370,6 +400,15 @@ def register() :
         description = "Sequencer controls Cameras of 3D View during frame updates",
         default = False
       )
+
+    # Register Camera Drop Down Menu
+    bpy.types.Scene.active_camera = bpy.props.EnumProperty(
+        name='Cameras',
+        description='Selected Camera:',
+        items=get_camera_list,
+        update=update
+    )         
+      
     # Register Cycle Cameras by CoDEmanX     
     bpy.utils.register_module(__name__)
 
@@ -392,7 +431,7 @@ def register() :
             "object.add_cam_to_view", type='NUMPAD_0', value='PRESS', ctrl=True, shift=True)
         kmi = km.keymap_items.new(
             "object.lock_cam_toggle", type='L', value='PRESS', ctrl=True, shift=True)
-        addon_keymaps.append((km, kmi))
+        addon_keymaps.append((km, kmi))       
 
 def unregister() :
     bpy.utils.unregister_class(MakePreviz)
@@ -410,7 +449,10 @@ def unregister() :
     bpy.utils.unregister_class(LockCameraToggle)
     for km, kmi in addon_keymaps:
         km.keymap_items.remove(kmi)
-    addon_keymaps.clear()    
+    addon_keymaps.clear()   
+    
+    # Unregister Camera Drop Down Menu
+    del bpy.types.Scene.active_camera     
     
 
 if __name__ == "__main__" :
