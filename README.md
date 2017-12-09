@@ -3,7 +3,7 @@
 Previz Camera Tools sets up the Video Editor to control the camera view selection in the 3D View on frame updates. Which makes it possible to edit the clip timings(on sequencer on the same screen and at the same time as editing cameras and everything else in the 3D Viewport.
 
 # Run the script
- 1. Run the script in the text-editor.
+ 1. Run the script in the text-editor or use 
  2. Find the functions in the bottom of the right-hand-side
     properties menu of the 3D View.
 
@@ -36,9 +36,9 @@ Previz Camera Tools sets up the Video Editor to control the camera view selectio
    Screen) 
 
 # Ideas for more functions(currently out of my coding skills) 
- - Set Focal Length
- - Buttons(two): Set in and out points 
- - Checkbox: Select Strip/Seq cam updated = Select Camera & update 3D View 
+ - Set Focal Length of current camera(not User perspective)
+ - Set in and out points(of the current camera) - to be inserted at playhead in Sequencer. 
+ - Select Strip > Select Camera & update 3D View(select cameras through Sequencer) - as a checkbox 
 
 # API trouble
  - Suggest API feature to access local scenes in Sequencer
