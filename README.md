@@ -1,6 +1,6 @@
 # Previz Camera Tools
-       (a proof of concept script)
-Previz Camera Tool sets up the Video Editor to control the camera selection in the 3D View on frame updates. Which makes it possible to edit the clip timings on the same screen and at the same time as editing cameras and everything else in the 3D Viewport.
+
+Previz Camera Tools sets up the Video Editor to control the camera view selection in the 3D View on frame updates. Which makes it possible to edit the clip timings(on sequencer on the same screen and at the same time as editing cameras and everything else in the 3D Viewport.
 
 # Run the script
  1. Run the script in the text-editor.
@@ -16,6 +16,8 @@ Previz Camera Tool sets up the Video Editor to control the camera selection in t
  
  "Cycle Cameras" by CoDEmanX will cycle between cameras. 
  Shortcuts: Ctrl+Shift+Left/Right arrow.
+ 
+ "Camera Renamer" shows current camera and allows to rename it.
       
  "Add Camera to Sequencer" will add a scene strip
  in the Sequencer with the current camera starting from the
@@ -26,20 +28,20 @@ Previz Camera Tool sets up the Video Editor to control the camera selection in t
  the sequencer will play the sequence in the 3D View. So 
  the camera work of the 3d scene can be edited instantly. 
 
-# NB. 
+# Troubleshooting 
  - Jitter in the Sequencer playback means hit "Refresh Sequencer" button. 
- - Only scene strips are supported in the sequencer. 
+ - Only scene strips are supported for previw in the 3D View. 
  - And only cameras from the current scene can be shown in 3d View. 
    (This is a limitation of Blender. There is only one scene pr. 
    Screen) 
 
-# Ideas for more functions 
-   Checkbox: Add camera to sequencer strip from current frame(y/n)
-   Buttons(two): Set in and out points 
+# Ideas for more functions(currently out of my coding skills) 
+ - Set Focal Length
+ - Buttons(two): Set in and out points 
+ - Checkbox: Select Strip/Seq cam updated = Select Camera & update 3D View 
 
 # API trouble
-   Checkbox: Select Strip = Select Camera & update 3D View(missing function detect new strip selected?) 
-   Suggest API feature to access local scenes in Sequencer
+ - Suggest API feature to access local scenes in Sequencer
 
 
 # Video on YouTube
