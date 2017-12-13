@@ -36,7 +36,6 @@ Previz Camera Tools sets up the Video Editor to control the camera view selectio
    Screen) 
 
 # Ideas for more functions(currently out of my coding skills) 
- - Set Focal Length of current camera(not User perspective)
  - Set in and out points(of the current camera) - to be inserted at playhead in Sequencer. 
  - Select Strip > Select Camera & update 3D View(select cameras through Sequencer) - as a checkbox 
 
