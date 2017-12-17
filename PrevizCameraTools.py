@@ -89,12 +89,14 @@ class PrevizMakerPanel(bpy.types.Panel) :
         TheCol.prop(scene, "make_Previz_LinkSequencer", icon = "LINK_AREA")  
         TheCol.separator() 
         TheCol.operator("view3d.walk", text = "Walk Navigation") 
-        TheCol.prop(context.space_data, "lens", text = "View Lens") # Lens for user perspective        
+        #TheCol.prop(context.space_data, "lens", text = "View Lens") # Lens for user perspective        
         TheCol.separator()           
         TheCol= TheCol.column(align=True)               
-        TheCol.operator("object.add_cam_to_view", text = "Add Camera")#, icon='CAMERA_DATA') 
+        TheCol.operator("object.add_cam_to_view", text = "Add Camera", icon='CAMERA_DATA')#, icon='CAMERA_DATA') 
+        TheCol.separator()  
+        TheCol.operator("view3d.make_previz", text = "Add Strip to Sequencer", icon="SEQ_SEQUENCER")                        
         TheCol.separator()        
-        TheCol.prop(context.scene.camera, 'name', text='', icon='CAMERA_DATA')#, icon='OBJECT_DATAMODE')                       
+        TheCol.prop(context.scene.camera, 'name', text='')#, icon='OBJECT_DATAMODE')                       
         TheCol.prop(context.scene.camera.data, "lens") 
         TheCol.prop(context.scene.camera.data, "dof_distance", text="DoF Distance") 
         TheCol.prop(context.scene.camera.data, "dof_object", text="") 
@@ -102,10 +104,9 @@ class PrevizMakerPanel(bpy.types.Panel) :
         TheCol.prop_menu_enum(context.scene.camera.data, "show_guide")  
         TheCol.separator() 
         TheCol= TheCol.column(align=True) 
-        TheCol.operator("view3d.make_previz", text = "Add Strip to Sequencer", icon="SEQ_SEQUENCER")                
-        TheCol.separator() 
-        TheCol.prop(context.scene, 'active_camera', text='', icon='CAMERA_DATA') # Camera drop down menu                               
+                             
         TheCol.operator("view3d.cycle_cameras", text = "Cycle Cameras", icon="FILE_REFRESH")          
+        TheCol.prop(context.scene, 'active_camera', text='', icon='CAMERA_DATA') # Camera drop down menu  
         #TheCol.separator() 
                 # check if bool property is enabled
         if (context.scene.make_Previz_LinkSequencer == True):
@@ -286,19 +287,19 @@ def syncSceneLength(*pArgs):
     cf = scn.frame_current
     for i in seq.sequences:    
         try:
-            if (i.frame_final_start <= cf
-            and i.frame_final_end > cf
-            and i.type == "SCENE" #Must be OpenGL strip
-            and i.scene.name==bpy.context.scene.name #Only if current scene in scene-strip
-            and not i.mute): #Must be unmute strip
- 
-                for area in bpy.context.screen.areas:
-                    if area.type == 'VIEW_3D': 
-                        # Avoid Camera Local View                        
+            if i.type == "SCENE": #Must be OpenGL strip            
+                if (i.frame_final_start <= cf
+                and i.frame_final_end > cf
+                and i.scene.name==bpy.context.scene.name #Only if current scene in scene-strip
+                and not i.mute): #Must be unmute strip
+     
+                    for area in bpy.context.screen.areas:
+                        if area.type == 'VIEW_3D': 
+                            # Avoid Camera Local View                        
 
 
-                        bpy.context.scene.camera = bpy.data.objects[i.scene_camera.name] # Select camera as view
-                        area.spaces.active.region_3d.view_perspective = 'CAMERA' # Use camera view            
+                            bpy.context.scene.camera = bpy.data.objects[i.scene_camera.name] # Select camera as view
+                            area.spaces.active.region_3d.view_perspective = 'CAMERA' # Use camera view            
                         
         except AttributeError:
                 pass
