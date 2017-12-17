@@ -1,17 +1,4 @@
-"""
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
 
-#
 # P r e v i z   C a m e r a   T o o l s
 #
 #           Version: 0.4
@@ -116,9 +103,10 @@ class PrevizMakerPanel(bpy.types.Panel) :
         TheCol.separator() 
         TheCol= TheCol.column(align=True) 
         TheCol.operator("view3d.make_previz", text = "Add Strip to Sequencer", icon="SEQ_SEQUENCER")                
-        TheCol.separator()                
+        TheCol.separator() 
+        TheCol.prop(context.scene, 'active_camera', text='', icon='CAMERA_DATA') # Camera drop down menu                               
         TheCol.operator("view3d.cycle_cameras", text = "Cycle Cameras", icon="FILE_REFRESH")          
-    
+        #TheCol.separator() 
                 # check if bool property is enabled
         if (context.scene.make_Previz_LinkSequencer == True):
             syncSceneLength()
@@ -418,7 +406,7 @@ def register() :
     # Register Camera Drop Down Menu
     bpy.types.Scene.active_camera = bpy.props.EnumProperty(
         name='Cameras',
-        description='Selected Camera:',
+        description='Select Camera:',
         items=get_camera_list,
         update=update
     )         
