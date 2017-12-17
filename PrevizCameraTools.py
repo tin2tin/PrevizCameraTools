@@ -233,9 +233,11 @@ class AddCamToView(bpy.types.Operator):
         bpy.context.scene.objects.active = active
         
         #if something was selected, select it again
-        if len(selected) != 0:
-            active.select = True
-            
+        try:
+            if len(selected) != 0:
+                active.select = True
+        except AttributeError:
+            pass    
         #camera off
         #bpy.ops.view3d.viewnumpad(type='CAMERA')
 
