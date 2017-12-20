@@ -3,11 +3,20 @@
 Previz Camera Tools sets up the Video Editor to control the camera view selection in the 3D View on frame updates. Which makes it possible to edit the clip timings(on sequencer on the same screen and at the same time as editing cameras and everything else in the 3D Viewport.
 
 # Run the script
- 1. Run the script in the text-editor or use 
+ 1. Run the script in the text-editor or install it though the User Preferences.   
  2. Find the functions in the bottom of the right-hand-side
     properties menu of the 3D View.
 
 # Functions
+ "Link Sequencer to 3D View" will link the 
+ framenumber and switch cameras in the 3D View. So playing 
+ the sequencer will play the sequence in the 3D View. So 
+ the camera work of the 3d scene can be edited instantly.
+
+ "Add Camera to Sequencer" will add a scene strip
+ in the Sequencer with the current camera starting from the
+ current frame.
+
  "Walk Navigation" (native Blender function) will give f.p.s. 
  camera control. Shortcuts: q,w,e,a,s,d
  
@@ -17,16 +26,8 @@ Previz Camera Tools sets up the Video Editor to control the camera view selectio
  "Cycle Cameras" by CoDEmanX will cycle between cameras. 
  Shortcuts: Ctrl+Shift+Left/Right arrow.
  
- "Camera Renamer" shows current camera and allows to rename it.
-      
- "Add Camera to Sequencer" will add a scene strip
- in the Sequencer with the current camera starting from the
- current frame.
-
- "Link Sequencer to 3D View" will link the 
- framenumber and switch cameras in the 3D View. So playing 
- the sequencer will play the sequence in the 3D View. So 
- the camera work of the 3d scene can be edited instantly. 
+ "Camera Renamer" shows current camera and allows to rename it. 
+ 
 
 # Troubleshooting 
  - Jitter in the Sequencer playback means hit "Refresh Sequencer" button. 
