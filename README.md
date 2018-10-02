@@ -2,6 +2,9 @@
 
 Previz Camera Tools sets up the Sequencer to control the camera view selection in the 3D View on frame updates. Which makes it possible to edit the clip timings(on sequencer on the same screen and at the same time as editing cameras and everything else in the 3D Viewport.
 
+![previz](https://github.com/tin2tin/PrevizCameraTools/blob/master/Previz.png "")
+
+
 # Run the script
  1. Run the script in the text-editor or install it though the User Preferences.   
  2. Find the functions in the bottom of the right-hand-side
